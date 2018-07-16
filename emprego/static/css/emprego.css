@@ -1,0 +1,17 @@
+.emprego .btn{
+    border-radius: 1.5rem;
+    padding: 0.5rem 1.2rem;
+}
+nav, footer{
+    padding-right:15px !important;
+}
+.modal-open, .modal{
+    padding-right:0px !important;
+}
+
+.emprego-img{
+    display: block;
+    max-width:150px;
+    margin-left: auto;
+    margin-right: auto;
+}

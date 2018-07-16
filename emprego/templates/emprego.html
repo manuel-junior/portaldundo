@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Empregos{% endblock %}
+
+{% load static %}
+{% load humanize %}
+
+{% block style %} <link href="{% static 'css/emprego.css' %}"  rel="stylesheet">{% endblock %}
+
+{% block content %}
+<section>
+    <div class="container emprego">
+
+        <div class="dropdown show d-flex justify-content-center pb-3">
+          <a class="btn btn-primary dropdown-toggle" href="{% url 'emprego:emprego' %}" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% if not categoria %}Todas{% else %}{{categoria.icon |safe }} {{ categoria.nome }}{% endif %}
+          </a>
+
+          <div class="dropdown-menu rounded-0" aria-labelledby="dropdownMenuLink">
+              {% if categoria %}
+              <a class="dropdown-item" href="{% url 'emprego:emprego' %}">Todas</a>
+              {% endif %}
+
+              {% for c in categorias %}
+                  {% if categoria.slug == c.slug %}
+                    <a class="dropdown-item selected" href="{{ c.get_absolute_url }}">{{c.icon |safe }} {{ c.nome }}<i class="fa fa-check" aria-hidden="true"></i></a>
+                  {% else%}
+                    <a class="dropdown-item" href="{{ c.get_absolute_url }}">{{c.icon |safe }} {{ c.nome }}</a>
+                  {% endif %}
+              {% endfor %}
+          </div>
+        </div>
+
+        {% for emprego in empregos %}
+                <div class="d-flex border border-secondary p-1 emprego" style="max-height:180px"><!-- -->
+                    <div class="mr-5" style="max-width:100px">
+                        <img style="height:100px" class="rounded-circle" src="{% if emprego.image %}{{ emprego.image.url }}{% else %}{% static "images/Not_available.jpg" %}{% endif %}">
+                    </div>
+                    <div class="d-flex flex-column ml-5">
+                        <a href="" class="card-links"  id="title" onclick="getEmpregoDetail('{{emprego.id}}', '{{emprego.title}}', '{% url 'emprego:ajax_detail' id=emprego.id title=emprego.title %}')" data-toggle="modal" data-target=".empregoModal">{{emprego.title}}</a>
+                        <p class="">{{emprego.empresa}}</p>
+                        <div class="d-inline-flex">
+                            <small class="text-sm-left"><i class="fas fa-map-marker-alt"></i> <b>{{emprego.endereco}}</b> {{emprego.pub_data|naturalday}}</small>
+                        </div>
+                    </div>
+                </div>
+
+
+        <br>
+        {% empty %}
+            <div class="d-flex justify-content-center text-center pt-5 pb-5 mt-5 mb-5">
+                    <div class="card border-secondary col-lg-6 pt-4 pb-4">
+                      <div class="card-body text-secondary">
+                        <h3 class="card-title">Sem empregos disponiveis</h3>
+                        <h1><i class="far fa-frown"></i></h1>
+                      </div>
+                    </div>
+            </div>
+        {% endfor %}
+
+
+        <!-- Modal -->
+
+
+    </div>
+
+</section>
+{% endblock %}
+
+{% block js %}
+
+
+    function getEmpregoDetail(id, title, url){
+        var modal = "<div class='modal fade empregoModal' tabindex='-1' role='dialog' aria-labelledby='empregoModal' aria-hidden='true'></div>";
+        $(".emprego").prepend(modal);
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType: 'json',
+            success: function(data) {
+                if (data) {
+                    criarModal(data);
+                }
+            }
+        });
+    }
+
+    function criarModal(emprego){
+        var modal_dialog = "<div class='modal-dialog modal-lg'></div>";
+        var modal_content = " <div class='modal-content rounded-0'></div>";
+        var modal_header = "<div class='modal-header'></div>";
+        var modal_title = "<h5 class='modal-title'></h5>";
+        var closeModalBtn = "<button type='button' class='close' aria-label='Close' onclick='closeModal()'><span aria-hidden='true'>&times;</span></button>";
+        var modal_body = "<div class='modal-body'><div class='row'><div class='col-md-3'><img class='rounded-circle emprego-img' src=''><small class='emprego-empresa'></small><br><small class='text-muted emprego-endereco'></small><br><small class='text-muted emprego-pub-data'></small></i></div><div class='col-md-9'><p class='emprego-text'></p></div></div></div>";
+        var modal_footer = "<div class='modal-footer'><button type='button' class='btn btn-primary'>Enviar mensagem</button><button type='button' class='btn btn-secondary'>Ligar</button></div>";
+        var location_icon = "<i class='fas fa-map-marker-alt'></i>";
+        var clock_icon = "<i class='far fa-clock'></i>";
+
+        $(".modal").append(modal_dialog);
+        $(".modal-dialog").append(modal_content);
+        $(".modal-content").append(modal_header);
+        $(".modal-header").append(modal_title);
+        $(".modal-header").append(closeModalBtn);
+        $(".modal-content").append(modal_body);
+        $(".modal-content").append(modal_footer);
+
+
+        $(".modal-title").html(emprego.title);
+        $(".modal-body .emprego-empresa").html(emprego.empresa);
+        $(".modal-body .emprego-text").html(emprego.text);
+
+        var url = emprego.imagem_url.replace(/^"(.*)"$/, '$1');
+        if(!!url){
+            $(".emprego-img").attr("src", "http://localhost:8089/media/"+url);
+        }else{
+            $(".emprego-img").attr("src", "http://localhost:8089/static/images/Not_available.jpg");
+        }
+        $(".modal-body .emprego-endereco").html(location_icon + " <b>"+emprego.endereco.replace(/^"(.*)"$/, '$1')+"</b>");
+        $(".modal-body .emprego-pub-data").html(clock_icon + " " + emprego.date);
+
+    }
+
+    function closeModal(){
+        $('.modal-backdrop').fadeOut(function(){ $(this).remove();});
+        $('.modal').addClass('animated fadeOutUp', function(){ $(this).remove();});
+    }
+{% endblock %}

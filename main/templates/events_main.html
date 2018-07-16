@@ -1,0 +1,56 @@
+{% load static %}
+{% for evento in events %}
+    {% if evento.happening %}
+        <div class="col-sm p-2 pb-4">
+            <div class="card border-0 card-event">
+                <img class="card-img-top rounded-0 border border-secondary" src="{% if evento.image %}{{ evento.image.url }}{% else %}{% static "images/Not_available.jpg" %}{% endif %}" alt="">
+                <div class="d-flex bg-white mt-2 border border-secondary">
+                    <a href="#" class="card-link p-2">{{evento.title}}</a>
+                    <div class="m-2 ml-auto text-white event-day-happening">
+                        {% if evento.start_dia.month == evento.end_dia.month%}
+                            <div class="p-2 d-flex flex-column text-center">
+                                <span>{{evento.start_dia|date:"j"}}-{{evento.end_dia|date:"j"}}</span>
+                                <span>{{evento.start_dia|date:"M"}}</span>
+                            </div>
+
+                        {% else %}
+                            <div class="d-flex flex-column p-1 pt-2 pb-2" style="min-width:57px;">
+                                <span>{{evento.start_dia|date:"j"}}-{{evento.start_dia|date:"M"}}</span>
+                                <span class="">{{evento.end_dia|date:"j"}}-{{evento.end_dia|date:"M"}}</span>
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elif evento.today %}
+        <div class="col-sm p-2 pb-4">
+            <div class="card border-0 card-event">
+                <img class="card-img-top rounded-0 border border-secondary" src="{% if evento.image %}{{ evento.image.url }}{% else %}{% static "images/Not_available.jpg" %}{% endif %}" alt="">
+                <div class="d-flex bg-white mt-2 border border-secondary">
+                    <a href="#" class="card-link p-2">{{evento.title}}</a>
+                    <div class="m-2 ml-auto p-2 d-flex flex-column text-center text-white event-day-today">
+                        <span>{{evento.start_dia|date:"j"}}</span>
+                        <span>{{evento.start_dia|date:"M"}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% elif evento.future %}
+        <div class="col-sm p-2 pb-4">
+            <div class="card border-0 card-event">
+                <img class="card-img-top rounded-0 border border-secondary" src="{% if evento.image %}{{ evento.image.url }}{% else %}{% static "images/Not_available.jpg" %}{% endif %}" alt="">
+                <div class="d-flex bg-white mt-2 border border-secondary">
+                    <a href="#" class="card-link p-2">{{evento.title}}</a>
+                    <div class="m-2 ml-auto p-2 d-flex flex-column text-center text-white event-day-future">
+                        <span>{{evento.start_dia|date:"j"}}</span>
+                        <span>{{evento.start_dia|date:"M"}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

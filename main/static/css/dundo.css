@@ -1,0 +1,22 @@
+		section{
+		    padding: 100px 0;
+		}
+		/*Wrap text around an image*/
+		.whrapText img{
+		    max-width: 350px!important;
+		    float: left;
+		    padding-right: 10px;
+		    margin-bottom: 10px;
+		    background-clip: content-box;
+	   	}
+	   	#patrimonio .card .card-img-top{
+            width:100%;
+            border-top-left-radius: 0rem!important;
+            border-top-right-radius: 0rem!important;
+            min-height: 250px;
+         }
+@media (max-width: 320px) {
+		.whrapText img{
+		    max-width: 300px!important;
+	   	}
+}

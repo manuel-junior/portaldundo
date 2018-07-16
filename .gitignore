@@ -1,0 +1,6 @@
+venv
+*.pyc
+media
+Media
+.env
+db.sqlite3

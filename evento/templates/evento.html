@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Eventos{% endblock %}
+{% load static %}
+{% block style %}
+<link href="{% static 'css/evento.css' %}" rel="stylesheet">{% endblock %}
+{% block content %}
+
+<section>
+    <div class="container">
+
+        <div class="jumbotron rounded-0 text-white p-0" style="background-image: url('{% if evento.image %}{{ evento.image.url }}{% else %}{% static " images/Not_available.jpg" %}{% endif %}')">
+        <div class="bg-opacity p-5">
+            <div class="d-inline-flex pt-2">
+                <h5 class="text-shodow">{{evento.start_dia|date:"l"}}, {{evento.start_dia|date:"j"}} de
+                    {{evento.start_dia|date:"F"}}</h5>
+            </div>
+            <br>
+            <br>
+            <h1 class="text-shodow">{{evento.title}}</h1>
+            <br>
+            <p class="text-shodow"><i class="far fa-clock"></i> {{evento.start_dia|time}} - {{evento.end_dia|time}}</p>
+            <p class="text-shodow"><i class="far fa-user"></i> {{evento.local}}</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-custom" href="#" role="button">Ler mais</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-between ">
+
+        {% for evento in ultimos_eventos %}
+            {% if evento.today %}
+                <div class="col-sm p-0 m-2 mb-4 card-event border">
+                    <div class="date-event-now d-flex flex-column text-center p-2 pt-3 pb-3 ml-3">
+                        <h5 class="">Hoje</h5>
+                        <h3><i class="fas fa-smile icon"></i></h3>
+                    </div>
+                    <img class="card-img-top rounded-0" src="{% if evento.image %}{{ evento.image.url }}{% else %}{% static "images/Not_available.jpg" %}{% endif %}" alt="">
+                    <div class="card-body border-top ">
+                        <p class="card-title">{{evento.title}}</p>
+                        <small><i class="far fa-clock"></i> {{evento.start_dia|time}} - {{evento.end_dia|time}}</small>
+                        <br>
+                        <small><i class="far fa-user"></i> {{evento.local}}</small>
+                        <br>
+                        <small><i class="fas fa-map-marker-alt"></i> {{evento.endereco.cidade}}</small>
+                    </div>
+                </div>
+            {% elif evento.happening %}
+                <div class="col-sm p-0 m-2 mb-4 card-event border">
+                    <div class="date-event-happening-now d-flex flex-column text-center p-2 pt-3 pb-3 ml-3">
+                        <h5 class="">Acontecendo</h5>
+                        {% if evento.start_dia.month == evento.end_dia.month%}
+                        <span class="">{{evento.start_dia|date:"j"}} - {{evento.end_dia|date:"j"}} de {{evento.start_dia|date:"M"}}</span>
+                        {% else %}
+                        <span class="">{{evento.start_dia|date:"j"}} {{evento.start_dia|date:"M"}} - {{evento.end_dia|date:"j"}} {{evento.end_dia|date:"M"}}</span>
+                        {% endif %}
+                    </div>
+                    <img class="card-img-top rounded-0" src="{% if evento.image %}{{ evento.image.url }}{% else %}{% static "images/Not_available.jpg" %}{% endif %}" alt="">
+                    <div class="card-body border-top">
+                        <p class="card-title">{{evento.title}}</p>
+                        <small><i class="far fa-clock"></i> {{evento.start_dia|time}} - {{evento.end_dia|time}}</small>
+                        <br>
+                        <small><i class="far fa-user"></i> {{evento.local}}</small>
+                        <br>
+                        <small><i class="fas fa-map-marker-alt"></i> {{evento.endereco.cidade}}</small>
+                    </div>
+                </div>
+            {% elif evento.future %}
+                <div class="col-sm p-0 m-2 mb-4 card-event border">
+                    <div class="date-event-future d-flex flex-column text-center ml-3">
+                        <span class="">{{evento.start_dia|date:"D"}}</span>
+                        <h5 class="">{{evento.start_dia|date:"j"}}</h5>
+                        <span class="">{{evento.start_dia|date:"M"}}</span>
+                    </div>
+                    <img class="card-img-top rounded-0" src="{% if evento.image %}{{ evento.image.url }}{% else %}{% static "images/Not_available.jpg" %}{% endif %}" alt="">
+                    <div class="card-body border-top">
+                        <p class="card-title">{{evento.title}}</p>
+                        <small><i class="far fa-clock"></i> {{evento.start_dia|time}} - {{evento.end_dia|time}}</small>
+                        <br>
+                        <small><i class="far fa-user"></i> {{evento.local}}</small>
+                        <br>
+                        <small><i class="fas fa-map-marker-alt"></i> {{evento.endereco.cidade}}</small>
+                        <p class="time-wait text-center m-0">
+                            <small><i class="far fa-hourglass"></i> {{evento.start_dia|timeuntil}}</small>
+                        </p>
+                    </div>
+                </div>
+            {% endif%}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+<script>
+
+</script>

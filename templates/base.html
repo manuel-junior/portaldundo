@@ -1,0 +1,237 @@
+<!doctype html>
+{% load static %}
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Font awesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <!--
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"  rel="stylesheet"> -->
+
+    <!-- Animate css from  https://daneden.github.io/animate.css/-->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    {% block style %}{% endblock %}
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="{% url 'main:inicio' %}"><img
+                src="{% static 'images/icon.png'%}"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link js-scroll-trigger" id="hover-nav" href="{% url 'main:inicio' %}"><i
+                            class="fas fa-home"></i> Início</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link js-scroll-trigger" id="hover-nav" href="{% url 'hospedagem:hospedagem' %}"><i
+                            class="fas fa-bed"></i> Hospedagem</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link js-scroll-trigger" id="hover-nav" href="{% url 'main:restaurante' %}"><i
+                            class="fas fa-utensils"></i> Restaurante</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link js-scroll-trigger" id="hover-nav" href="{% url 'emprego:emprego' %}"><i
+                            class="far fa-address-card"></i> Emprego</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link " id="hover-nav" href="{% url 'main:servico' %}"><i class="far fa-file-alt"></i>
+                        Serviço</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="hover-nav" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false"><i class="fas fa-th"></i> Mais</a>
+                    <div class="dropdown-menu rounded-0">
+                        <a class="dropdown-item" href="{% url 'evento:evento' %}"><i class="far fa-calendar-alt"></i>
+                            Evento</a>
+                        <a class="dropdown-item" href="{% url 'main:noticia' %}"><i class="far fa-newspaper"></i>
+                            Notícia</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'main:sobre_dundo' %}"><i class="fas fa-users"></i>
+                            História</a>
+                        <a class="dropdown-item" href="{% url 'main:patrimonio' %}"><i class="far fa-building"></i>
+                            Património</a>
+                        <a class="dropdown-item" href="{% url 'main:contacto' %}"><i class="fas fa-phone"></i> Contacto</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger a-link text-center" onclick="showSearch()"><i
+                            class="fas fa-search"></i></a>
+                    <form class="searchForm" id="searchForm" method='GET' action='{% url "search:search" %}'>
+                        {% csrf_token %}
+                        <div class="input-group mb-3 input">
+                            <input type="text" class="form-control searchB-Radius" placeholder="Insira o texto..."
+                                   aria-describedby="basic-addon2" name="q" data-placement="bottom">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary searchB-Radius ml-1" type="submit">Pesquisar</button>
+                            </div>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block content %}
+
+
+{% endblock %}
+
+
+<!-- Footer -->
+<footer class="py-4 bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <p class="text-light">Links</p>
+                <ul class="list-unstyled">
+                    <li><a class="text-secondary" href="{% url 'hospedagem:hospedagem' %}">Hospedagem</a></li>
+                    <li><a class="text-secondary" href="{% url 'main:restaurante' %}">Restaurante</a></li>
+                    <li><a class="text-secondary" href="{% url 'emprego:emprego' %}">Emprego</a></li>
+                    <li><a class="text-secondary" href="{% url 'main:servico' %}">Serviço</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-light">Mais</p>
+                <ul class="list-unstyled">
+                    <li><a class="text-secondary" href="{% url 'evento:evento' %}">Evento</a></li>
+                    <li><a class="text-secondary" href="{% url 'main:noticia' %}">Notícia</a></li>
+                    <li><a class="text-secondary" href="{% url 'main:patrimonio' %}">Património</a></li>
+                    <li><a class="text-secondary" href="{% url 'main:sobre_dundo' %}">História</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-light">Contactos</p>
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="text-secondary" href="">Rua 25 de Abril, Dundo, edificio 3</a>
+                    </li>
+                    <li>
+                        <a class="text-secondary" href="">+244 925 448 787</a>
+                    </li>
+                    <li>
+                        <a class="text-secondary" href="">cidadedodundo@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-light text-center">Segue-nos</p>
+                <div class="networking-icon">
+                    <div class="container-snetworking-footer">
+                        <a href="/"><i class="fab fa-facebook" id="icon-footer"></i></a>
+                    </div>
+                    <div class="container-snetworking-footer">
+                        <a href="/"><i class="fab fa-twitter" id="icon-footer"></i></a>
+                    </div>
+                    <div class="container-snetworking-footer">
+                        <a href="/"><i class="fab fa-instagram" id="icon-footer"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="col-sm-6" style="padding: 0px;">
+            <p class="text-white">@copyright 2018. Coded by <a class="card-link" href="http://yasolutions.pt">Yasolutions</a>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<!--
+<script src="{% static 'vendor/jquery/jquery.min.js'%}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+<!-- Plugin JavaScript -->
+<!--
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+<!-- Custom JavaScript for this theme -->
+
+<!-- Optional JavaScript -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+      {% block js %}
+
+      {% endblock %}
+
+      function showSearch() {
+        if (document.getElementById("searchForm").style.display == "block"){
+          document.getElementById("searchForm").style.display = "none";
+        }
+        else{
+          document.getElementById("searchForm").style.display = "block";
+        }
+      }
+
+      /*
+      // Config
+      // =================================================
+
+      var $nav_header    = $('.navbar'),
+          header_height  = $('.navbar').height(),
+          offset_val     = 600 - header_height;
+
+       var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+       if(w > 990){// se a largura do ecra for maior ele faz isso
+          // Method
+          // =================================================
+
+          function navSlide() {
+            var scroll_top = $(window).scrollTop();
+
+            if (scroll_top >= offset_val) { // the detection!
+              $nav_header.addClass('bg-dark');
+            } else {
+              $nav_header.removeClass('bg-dark');
+            }
+          }
+
+          // Handler
+          // =================================================
+        $(window).scroll(navSlide);
+       }
+      else{
+        $nav_header.addClass('bg-dark');
+      }
+        */
+
+</script>
+</body>
+
+</body>
+</html>
