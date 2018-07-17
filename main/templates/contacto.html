@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+<style type="text/css">
+  #contact .white, .sugest{
+    text-align: center;
+    color: #333;
+  }
+  .sugest{
+    font-size: 20px;
+    animation-delay: 1s;
+  }
+  .cInform{
+    max-width: 500px;
+    color: #fff;
+    background: gray;
+    margin: 0 auto;
+  }
+  .cInform ul{
+    padding: 20px 50px;
+    text-decoration: none;
+    list-style: none;
+  }
+  #contact>li{
+    font-size: 16px;
+  }
+  .iconcontact{
+    font-size: 20px;
+    padding-right: 10px;
+    color: #FF8A7B;
+  }
+  .fa-whatsapp{
+    color: #2CFF88;
+    font-size: 24px;
+  }
+
+  /* messages */
+  .errorlist {
+    color:#cc0033;
+    float:left;
+    clear:both;
+    padding-left:10px;
+    list-style-type: none;
+  }
+  ul.messages {
+      margin: 0 auto;
+      max-width: 500px;
+      margin-bottom: 15px;
+      text-align: center;
+      padding:0;
+      list-style-type: none;
+  }
+  ul.messages li.success,
+  ul.messages li.error{
+      margin:0;
+      padding:14px 20px;
+      list-style:none;
+      color:#fff;
+  }
+
+  ul.messages li.success { background:#81ce81; }
+  ul.messages li.success a { color:#0ac33e; }
+
+  ul.messages li.error { background:#FB303F;}
+  ul.messages li.error a { color:#e9828e; }
+
+  ul.messages li a.close {
+      margin:0;
+      float:right;
+      opacity:1;
+      border:0;
+      box-shadow:none;
+      text-shadow:none;
+  }
+
+  @media (max-width: 500px) {
+    div.container{
+      padding: 0 10px;
+    }
+    #contact{
+      padding: 10px 3px 30px 3px;
+    }
+    .cInform ul{
+      padding: 20px 20px;
+    }
+  }
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+.contactf {
+	max-width: 500px;
+	text-align: center;
+	margin: 0 auto;
+	background: gray;
+	padding: 20px;
+}
+.contactf input, .contactf textarea , .contactf button{
+  	border: 0;
+  	outline: 0;
+  	padding: 0.8em;
+  	<!-- -moz-border-radius: 8px;-->
+  	<!-- -webkit-border-radius: 8px;-->
+  	<!--border-radius: 8px;-->
+  	display: block;
+  	width: 100%;
+  	margin-top: 1em;
+  	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  	resize: none;
+}
+.contactf input:focus,.contactf textarea:focus {
+  -moz-box-shadow: 0px 0px 1px 1px #e74c3c !important;
+  -webkit-box-shadow: 0px 0px 2px 2px #e74c3c !important;
+  box-shadow: 0px 0px 1px 1px #e74c3c!important;
+}
+
+form .input-submit {
+  color: #fff;
+  background: #e74c3c;
+  cursor: pointer;
+  border-radius: 1.5rem;
+}
+form .input-submit:hover {
+  	-moz-box-shadow: 0 2px 10px 3px rgba(0, 0, 0, 0.19);
+ 	-webkit-box-shadow: 0 2px 10px 3px rgba(0, 0, 0, 0.19);
+	box-shadow: 0 2px 10px 3px rgba(0, 0, 0, 0.19);
+	background: #333;
+	text-decoration:none;
+}
+.contactf textarea {
+	width: 100%;
+  	height: 150px;
+}
+
+@media (max-width: 480px) {
+	.contactf textarea {
+		height: 150px;
+	}
+	.contactf{
+		padding: 10px;
+	}
+	.contactf a{
+
+	}
+}
+/* Clearfix */
+.cf:before,
+.cf:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.cf:after {
+  clear: both;
+}
+
+</style>
+<section id="contact">
+  <div class="container">
+    <hr>
+    <p class="sugest animated zoomIn">Tem alguma dúvida a ser esclarecida ou sugestão a dar? Não hesite em contactar-nos
+    </p>
+    <hr>
+    <h3 style="text-align: center;">Contactos da Direcção</h3>
+    <div class="cInform">
+      <ul>
+        <li><i class="fas fa-map-marker-alt iconcontact"></i> Rua 28 de Agosto, Centro Urbano</li>
+        <li><i class="fas fa-phone iconcontact"></i> +244 925 008 900</li>
+        <li><i class="far fa-envelope iconcontact"></i> cidadedodundo@gmail.com</li>
+        <li><i class="fab fa-whatsapp iconcontact"></i> +244 925 008 900</li>
+      </ul>
+    </div>
+
+    {% if messages %}
+      <ul class="messages animated fadeInDown" id="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+          {{ message|safe }}
+          <a class="close">✖</a>
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form role="form" action="" method="post" class="contactf">
+      {% csrf_token %}{{ form.as_p }}
+      <button class="input-submit" type="submit">Enviar <i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block js%}
+  document.getElementById("id_contact_name").placeholder = "Nome";
+  document.getElementById("id_contact_email").placeholder = "Email";
+  document.getElementById("id_content").placeholder = "Mensagem";
+
+  $(".close").on('click', function(){
+    $("#messages").css({"display": "none",});
+  });
+{% endblock %}
